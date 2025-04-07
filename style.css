@@ -1,0 +1,168 @@
+@font-face {
+    font-family: "Noto Sans";
+    src: url("assets/fonts/static/NotoSans-Medium.ttf") format("truetype");
+    font-weight: 500;
+  }
+  @font-face {
+    font-family: "Noto Sans";
+    src: url("assets/fonts/static/NotoSans-Bold.ttf") format("truetype");
+    font-weight: 700;
+  }
+  @font-face {
+    font-family: "Noto Sans";
+    src: url("assets/fonts/static/NotoSans-Regular.ttf") format("truetype");
+    font-weight: 400;
+  }
+/* 1. Use a more-intuitive box-sizing model */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* 2. Remove default margin */
+* {
+  margin: 0;
+}
+ul{
+    padding-left: 0;
+    list-style: none;
+}
+button{
+    font-family: inherit;
+    cursor: pointer;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 15px;
+}
+body{
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    font-family: "Noto Sans", sans-serif;
+}
+.theme_container{
+    width: 100%;
+    height: 100%;
+    padding: 30px 40px;
+}
+main{
+    padding: 30px 40px;
+}
+.navbar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+input[type="checkbox"]{
+    display: none;
+}
+/* extension section */
+
+.extensions_header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    .extensions_header_btns{
+        display: flex;
+        gap: 5px;
+    }
+
+}
+
+.extension_list{
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 10px;
+
+    /* extension card */
+
+    .extension_list_item{
+        display: grid;
+        padding: 20px;
+        border-radius: 25px;
+        background-color: gray;
+
+        .extension_list_item_top{
+            display: flex;
+            gap: 10px;
+
+            p{
+                min-height: 8ch;
+            }
+            img{
+                max-width: 60px;
+                max-height: 60px;
+            }
+        }
+
+        .extension_list_item_bottom{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    }
+}
+
+
+/* switch style*/
+.switch {
+position: relative;
+display: inline-block;
+width: 60px;
+height: 34px;
+}
+
+.switch input {
+opacity: 0;
+width: 0;
+height: 0;
+}
+
+.slider {
+position: absolute;
+cursor: pointer;
+top: 0;
+left: 0;
+right: 0;
+bottom: 0;
+background-color: #ccc;
+-webkit-transition: .4s;
+transition: .4s;
+}
+
+.slider:before {
+position: absolute;
+content: "";
+height: 26px;
+width: 26px;
+left: 4px;
+bottom: 4px;
+background-color: white;
+-webkit-transition: .4s;
+transition: .4s;
+}
+
+input:checked + .switch .slider {
+background-color: #2196F3;
+}
+
+input:focus + .switch .slider {
+box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .switch .slider:before {
+-webkit-transform: translateX(26px);
+-ms-transform: translateX(26px);
+transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+border-radius: 34px;
+}
+
+.slider.round:before {
+border-radius: 50%;
+}
