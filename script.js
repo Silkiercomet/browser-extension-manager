@@ -1,7 +1,8 @@
 function changeTheme() {
-  const themeContainer = document.querySelector(".theme_container");
+  const themeContainer = document.querySelector("body");
   const navbar = document.querySelector(".navbar");
   const extensionListItems = document.querySelectorAll(".extension_list_item");
+
 
   themeContainer.classList.toggle("dark_theme");
   navbar.classList.toggle("dark_navbar");
@@ -9,6 +10,7 @@ function changeTheme() {
   extensionListItems.forEach((item) => {
     item.classList.toggle("dark_item");
   });
+
 }
 
 const themeButton = document.getElementById("navbar_theme_btn");
@@ -39,7 +41,7 @@ async function populateExtensionList() {
           </div>
         </div>
         <div class="extension_list_item_bottom">
-          <button class="remove">Remove</button>
+          <button class="item_btn">Remove</button>
           <input type="checkbox" id="switch-toggle-${e.name}" ${
         e.isActive ? "checked='true'" : ""
       }>
@@ -61,3 +63,5 @@ async function populateExtensionList() {
 
 // Call the function to populate the list when the page loads
 window.addEventListener("load", populateExtensionList);
+
+

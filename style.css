@@ -54,6 +54,7 @@ body {
   min-height: 100vh;
   font-family: "Noto Sans", sans-serif;
   background: linear-gradient(180deg, #ebf2fc 0%, #eef8f9 100%);
+  transition: 500ms ease-in-out;
 }
 .theme_container {
   width: 100%;
@@ -69,9 +70,12 @@ main {
   justify-content: space-between;
   align-items: center;
   background-color: var(--neutral-0);
-  padding-block: 13px 10px;
-  padding-inline: 10px;
-  border-radius: 10px;
+  padding: 13px;
+  border-radius: 15px;
+  transition: 300ms ease-in-out;
+}
+.navbar_logo {
+  max-height: 41px;
 }
 input[type="checkbox"] {
   display: none;
@@ -100,14 +104,20 @@ input[type="checkbox"] {
     display: grid;
     padding: 20px;
     border-radius: 25px;
-    background-color: gray;
-
+    border: 1px solid var(--neutral-200);
+    background-color: var(--neutral-0);
+    box-shadow: var(--neutral-200) 0px 8px 24px;
+    transition: background-color 300ms ease-in-out;
     .extension_list_item_top {
       display: flex;
       gap: 10px;
 
+      h3 {
+        color: var(--neutral-900);
+      }
       p {
         min-height: 8ch;
+        color: var(--neutral-600);
       }
       img {
         max-width: 60px;
@@ -119,16 +129,46 @@ input[type="checkbox"] {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      padding-top: 1rem;
     }
   }
 }
+.item_btn {
+  background-color: transparent;
+  border: 1px solid var(--neutral-200);
+  color: var(--neutral-900);
+  transition: 300ms ease-in-out;
+  font-weight: 500;
+  &:hover {
+    color: var(--neutral-0);
+    background-color: var(--red-500);
+    border-color: var(--red-500);
+  }
+}
+.btn {
+  background-color: var(--neutral-0);
+  border: 1px solid var(--neutral-300);
+  font-weight: 500;
+  transition: 300ms ease-in-out;
 
+  &:hover {
+    opacity: 0.5;
+  }
+}
+.btn.active {
+  background-color: var(--red-700);
+  border-color: var(--red-500);
+  color: var(--neutral-0);
+  &:hover {
+    opacity: 0.8;
+  }
+}
 /* switch style*/
 .switch {
   position: relative;
   display: inline-block;
-  width: 60px;
-  height: 34px;
+  width: 45px;
+  height: 25px;
 }
 
 .switch input {
@@ -152,27 +192,27 @@ input[type="checkbox"] {
 .slider:before {
   position: absolute;
   content: "";
-  height: 26px;
-  width: 26px;
+  height: 19px;
+  width: 19px;
   left: 4px;
-  bottom: 4px;
+  bottom: 3px;
   background-color: white;
   -webkit-transition: 0.4s;
   transition: 0.4s;
 }
 
 input:checked + .switch .slider {
-  background-color: #2196f3;
+  background-color: var(--red-700);
 }
 
 input:focus + .switch .slider {
-  box-shadow: 0 0 1px #2196f3;
+  box-shadow: 0 0 1px var(--red-700);
 }
 
 input:checked + .switch .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
+  -webkit-transform: translateX(20px);
+  -ms-transform: translateX(20px);
+  transform: translateX(20px);
 }
 
 /* Rounded sliders */
@@ -205,7 +245,85 @@ input:checked + .switch .slider:before {
 }
 
 .dark_navbar #navbar_theme_btn {
+  background-color: var(--neutral-700);
   div {
     transform: translateX(-53px);
+  }
+}
+.dark_theme {
+  background: linear-gradient(180deg, #040918 0%, #091540 100%);
+  .extensions .extensions_header .extensions_header_btns > li .btn{
+    background-color: var(--neutral-600);
+    border-color: transparent;
+    color: var(--neutral-0);
+    &.active{
+      background-color: var(--red-700);
+    }
+  }
+  .extensions .extensions_header h1{
+    color: var(--neutral-0);
+  }
+}
+.dark_navbar {
+  background-color: var(--neutral-800);
+  .letters {
+    fill: var(--neutral-0);
+  }
+}
+/* Explanation:
+The reason the styles in `.dark_item` are only applied with `!important` is likely due to specificity.  Another rule with higher specificity is already styling the same properties. CSS specificity determines which CSS rule is applied if multiple rules apply to the same element.
+
+Here's how to approach fixing this, ordered from best to worst practice:
+
+1.  **Increase Specificity (Targeted Approach):** The best solution is to make the selector for `.dark_item` *more specific* than the conflicting rules.  Examine the rules that are overriding the styles you want to apply.  Then, add selectors to the `.dark_item` rule to make it more specific. For example:
+
+    *   If the element with `.dark_item` is within a parent with a specific ID, include that ID in your selector: `#parent-id .dark_item`.
+    *   If the element with `.dark_item` has other classes, include those as well: `.dark_item.other-class`.
+    *   If the element is directly nested inside another element `main > .dark_item`
+
+    The goal is to win the specificity battle without resorting to `!important`.
+
+2.  **Restructure Your CSS (Best Practice, but most work):** The ideal solution is to refactor your CSS to avoid specificity conflicts in the first place.  This might involve:
+
+    *   **Reducing Nesting:**  Deeply nested selectors increase specificity.  Flatten your CSS structure where possible.
+    *   **Using a CSS Methodology (BEM, OOCSS, etc.):**  These methodologies encourage flat, predictable CSS, which minimizes specificity issues.
+
+3.  **Target element by parent theme class:** It is possible to target the `extension_list_item` elements that has the `dark_item` class by adding the `dark_theme` class to its parent. this way the style is applied only in that specific instance
+
+4.  **`!important` (Use Sparingly):** While `!important` *will* solve the immediate problem, it should be a last resort. It makes your CSS harder to maintain and debug because it breaks the normal cascading order. If you use `!important`, add a comment explaining *why* it's necessary.
+
+Here's the modified code reflecting the "Increase Specificity" approach.  **You'll need to adapt this to your specific HTML structure and the conflicting CSS rules.** Let's assume the `.dark_item` element is always within an element that also has a class of `.extension_list_item`:
+*/
+
+/*
+   Or, if you target the element based on the "dark_theme" in the body:
+*/
+
+body.dark_theme .extension_list_item.dark_item {
+  background-color: var(--neutral-800);
+  border-color: var(--neutral-800);
+  box-shadow: none;
+  h3 {
+    color: var(--neutral-0);
+  }
+  p {
+    color: var(--neutral-300);
+  }
+  button {
+    border-color: var(--neutral-600);
+    color: var(--neutral-0);
+    &:hover {
+      border-color: transparent;
+    }
+  }
+}
+
+@media screen and (width < 600px) {
+  .extensions_header{
+
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2rem;
+
   }
 }
