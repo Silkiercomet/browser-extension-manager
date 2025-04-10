@@ -6,14 +6,13 @@ function changeTheme() {
   themeContainer.classList.toggle("dark_theme");
   navbar.classList.toggle("dark_navbar");
 
-  extensionListItems.forEach(item => {
+  extensionListItems.forEach((item) => {
     item.classList.toggle("dark_item");
   });
 }
 
 const themeButton = document.getElementById("navbar_theme_btn");
 themeButton.addEventListener("click", changeTheme);
-
 
 async function populateExtensionList() {
   const extensionListContainer = document.querySelector(".extension_list");
@@ -27,7 +26,7 @@ async function populateExtensionList() {
     const response = await fetch("data.json");
     const data = await response.json();
 
-    data.forEach(e => {
+    data.forEach((e) => {
       const listItem = document.createElement("li");
       listItem.classList.add("extension_list_item");
 
@@ -41,7 +40,9 @@ async function populateExtensionList() {
         </div>
         <div class="extension_list_item_bottom">
           <button class="remove">Remove</button>
-          <input type="checkbox" id="switch-toggle-${e.name}" ${e.isActive ? "checked='true'" : ""}>
+          <input type="checkbox" id="switch-toggle-${e.name}" ${
+        e.isActive ? "checked='true'" : ""
+      }>
           <label for="switch-toggle-${e.name}" class="switch">
             <span class="slider round"></span>
           </label>
@@ -60,4 +61,3 @@ async function populateExtensionList() {
 
 // Call the function to populate the list when the page loads
 window.addEventListener("load", populateExtensionList);
-
